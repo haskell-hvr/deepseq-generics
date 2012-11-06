@@ -1,0 +1,5 @@
+language: haskell
+install:
+ - cabal install --enable-tests --enable-benchmarks --only-dependencies
+ - cabal configure --enable-tests --enable-benchmarks
+ - cabal build
