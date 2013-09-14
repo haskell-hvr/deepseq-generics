@@ -17,6 +17,7 @@
 
 module Control.DeepSeq.Generics
     ( genericRnf
+    , genericRnfV1
       -- * "Control.DeepSeq" re-exports
     , deepseq
     , force
@@ -76,11 +77,12 @@ genericRnf = grnf_ . from
 {-# INLINE genericRnf #-}
 
 -- | Hidden internal type-class
+--
+-- Note: the 'V1' instance is not provided for 'GNFData' in order to
+-- trigger a compile-time error; see 'GNFDataV1' which defers this to
+-- a runtime error.
 class GNFData f where
     grnf_ :: f a -> ()
-
--- note: the V1 instance is not provided, as uninhabited types can't
--- be reduced to NF anyway
 
 instance GNFData U1 where
     grnf_ !U1 = ()
@@ -102,3 +104,57 @@ instance (GNFData a, GNFData b) => GNFData (a :+: b) where
     grnf_ (L1 x) = grnf_ x
     grnf_ (R1 x) = grnf_ x
     {-# INLINE grnf_ #-}
+
+
+-- | Variant of 'genericRnf' which supports derivation for uninhabited types.
+--
+-- For instance, the type
+--
+-- > data TagFoo deriving Generic
+--
+-- would cause a compile-time error with 'genericRnf', but with
+-- 'genericRnfV1' the error is deferred to run-time:
+--
+-- > Prelude> genericRnf (undefined :: TagFoo)
+-- >
+-- > <interactive>:1:1:
+-- >     No instance for (GNFData V1) arising from a use of `genericRnf'
+-- >     Possible fix: add an instance declaration for (GNFData V1)
+-- >     In the expression: genericRnf (undefined :: TagFoo)
+-- >     In an equation for `it': it = genericRnf (undefined :: TagFoo)
+-- >
+-- > Prelude> genericRnfV1 (undefined :: TagFoo)
+-- > *** Exception: Control.DeepSeq.Generics.genericRnfV1: NF not defined for inhabited types
+--
+-- /Since: 0.1.1.0/
+genericRnfV1 :: (Generic a, GNFDataV1 (Rep a)) => a -> ()
+genericRnfV1 = grnfV1_ . from
+{-# INLINE genericRnfV1 #-}
+
+-- | Variant of 'GNFData' supporting 'V1'
+class GNFDataV1 f where
+    grnfV1_ :: f a -> ()
+
+instance GNFDataV1 V1 where
+    grnfV1_ = error "Control.DeepSeq.Generics.genericRnfV1: NF not defined for inhabited types"
+
+instance GNFDataV1 U1 where
+    grnfV1_ !U1 = ()
+    {-# INLINE grnfV1_ #-}
+
+instance NFData a => GNFDataV1 (K1 i a) where
+    grnfV1_ = rnf . unK1
+    {-# INLINE grnfV1_ #-}
+
+instance GNFDataV1 a => GNFDataV1 (M1 i c a) where
+    grnfV1_ = grnfV1_ . unM1
+    {-# INLINE grnfV1_ #-}
+
+instance (GNFDataV1 a, GNFDataV1 b) => GNFDataV1 (a :*: b) where
+    grnfV1_ (x :*: y) = grnfV1_ x `seq` grnfV1_ y
+    {-# INLINE grnfV1_ #-}
+
+instance (GNFDataV1 a, GNFDataV1 b) => GNFDataV1 (a :+: b) where
+    grnfV1_ (L1 x) = grnfV1_ x
+    grnfV1_ (R1 x) = grnfV1_ x
+    {-# INLINE grnfV1_ #-}

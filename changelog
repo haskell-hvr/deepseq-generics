@@ -1,0 +1,9 @@
+-*-change-log-*-
+
+0.1.1.0 Herbert Valerio Riedel  <hvr@gnu.org>  September 2013
+
+	* Control/DeepSeq/Generics.hs (genericRnfV1): New Function
+
+0.1.0.0 Herbert Valerio Riedel  <hvr@gnu.org>  September 2012
+
+	* Initial Release
