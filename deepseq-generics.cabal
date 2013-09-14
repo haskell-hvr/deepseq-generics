@@ -29,6 +29,8 @@ description:
     in combination with the existing @deepseq@ package as opposed to defining a
     conflicting drop-in replacement for @deepseq@'s @Control.Deepseq@ module.
 
+extra-source-files: changelog
+
 source-repository head
     type:     git
     location: https://github.com/hvr/deepseq-generics.git
