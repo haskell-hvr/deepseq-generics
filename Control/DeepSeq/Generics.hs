@@ -124,7 +124,7 @@ instance (GNFData a, GNFData b) => GNFData (a :+: b) where
 -- >     In an equation for `it': it = genericRnf (undefined :: TagFoo)
 -- >
 -- > Prelude> genericRnfV1 (undefined :: TagFoo)
--- > *** Exception: Control.DeepSeq.Generics.genericRnfV1: NF not defined for inhabited types
+-- > *** Exception: Control.DeepSeq.Generics.genericRnfV1: NF not defined for uninhabited types
 --
 -- /Since: 0.1.1.0/
 genericRnfV1 :: (Generic a, GNFDataV1 (Rep a)) => a -> ()
@@ -136,7 +136,7 @@ class GNFDataV1 f where
     grnfV1_ :: f a -> ()
 
 instance GNFDataV1 V1 where
-    grnfV1_ = error "Control.DeepSeq.Generics.genericRnfV1: NF not defined for inhabited types"
+    grnfV1_ = error "Control.DeepSeq.Generics.genericRnfV1: NF not defined for uninhabited types"
 
 instance GNFDataV1 U1 where
     grnfV1_ !U1 = ()
