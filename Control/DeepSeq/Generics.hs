@@ -79,8 +79,8 @@ genericRnf = grnf_ . from
 class GNFData f where
     grnf_ :: f a -> ()
 
--- note: the V1 instance is not provided, as uninhabited types can't
--- be reduced to NF anyway
+instance GNFData V1 where
+  grnf_ = undefined
 
 instance GNFData U1 where
     grnf_ !U1 = ()
