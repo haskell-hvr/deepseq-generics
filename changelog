@@ -1,5 +1,9 @@
 -*-change-log-*-
 
+0.1.1.1 Herbert Valerio Riedel  <hvr@gnu.org>  November 2013
+
+	* Add support for GHC 7.8
+
 0.1.1.0 Herbert Valerio Riedel  <hvr@gnu.org>  September 2013
 
 	* Control/DeepSeq/Generics.hs (genericRnfV1): New Function
