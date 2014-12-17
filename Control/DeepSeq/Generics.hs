@@ -9,11 +9,23 @@
 -- Stability:   stable
 -- Portability: GHC
 --
--- Note: Beyond the primary scope of providing the 'genericRnf'
---       helper, this module also re-exports the definitions from
---       "Control.DeepSeq" for convenience. If this poses any
---       problems, just use qualified or explicit import statements
---       (see code usage example in the 'genericRnf' description)
+-- Beyond the primary scope of providing the 'genericRnf' helper, this
+-- module also re-exports the definitions from "Control.DeepSeq" for
+-- convenience. If this poses any problems, just use qualified or
+-- explicit import statements (see code usage example in the
+-- 'genericRnf' description)
+--
+-- __NOTE__: Starting with @deepseq-1.4.0.0@, 'NFData' gained support
+-- for generic derivation via @DefaultSignatures@. The new default
+-- 'rnf' method implementation is then equivalent to
+--
+-- @
+-- instance NFData MyType where
+--   'rnf' = 'genericRnfV1'
+-- @
+--
+-- See documentation of 'rnf' for more details on how to use the new
+-- built-in 'Generic' support.
 
 module Control.DeepSeq.Generics
     ( genericRnf
@@ -69,7 +81,7 @@ import GHC.Generics
 -- >
 -- > instance NFData a => NFData (Bar a) where rnf = genericRnf
 --
--- Note: The 'GNFData' type-class showing up in the type-signature is
+-- __NOTE__: The 'GNFData' type-class showing up in the type-signature is
 --       used internally and not exported on purpose currently.
 
 genericRnf :: (Generic a, GNFData (Rep a)) => a -> ()
@@ -78,7 +90,7 @@ genericRnf = grnf_ . from
 
 -- | Hidden internal type-class
 --
--- Note: the 'V1' instance is not provided for 'GNFData' in order to
+-- __NOTE__: the 'V1' instance is not provided for 'GNFData' in order to
 -- trigger a compile-time error; see 'GNFDataV1' which defers this to
 -- a runtime error.
 class GNFData f where
