@@ -26,7 +26,7 @@ description:
     This package differs from the @generic-deepseq@ package by working
     in combination with the existing @deepseq@ package as opposed to
     defining a conflicting drop-in replacement for @deepseq@'s
-    @Control.Deepseq@ module.
+    @Control.DeepSeq@ module.
     .
     __Note__: The ability to auto-derive via "GHC.Generics" has been
     merged into @deepseq-1.4.0.0@. This package is now still useful

@@ -1,7 +1,7 @@
 ## 0.2.0.0  January 2016
 
  * Add support for GHC 8.0
- * Remove re-exports from `deepseq:Control.Deepseq`
+ * Remove re-exports from `deepseq:Control.DeepSeq`
  * Synchronise implementation to `deepseq-1.4.0.0`'s code
 
 ## 0.1.1.2  December 2014
