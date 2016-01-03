@@ -9,12 +9,6 @@
 -- Stability:   stable
 -- Portability: GHC
 --
--- Beyond the primary scope of providing the 'genericRnf' helper, this
--- module also re-exports the definitions from "Control.DeepSeq" for
--- convenience. If this poses any problems, just use qualified or
--- explicit import statements (see code usage example in the
--- 'genericRnf' description)
---
 -- __NOTE__: Starting with @deepseq-1.4.0.0@, 'NFData' gained support
 -- for generic derivation via @DefaultSignatures@. The new default
 -- 'rnf' method implementation is then equivalent to
@@ -30,11 +24,6 @@
 module Control.DeepSeq.Generics
     ( genericRnf
     , genericRnfV1
-      -- * "Control.DeepSeq" re-exports
-    , deepseq
-    , force
-    , NFData(rnf)
-    , ($!!)
     ) where
 
 import Control.DeepSeq
@@ -82,7 +71,7 @@ import GHC.Generics
 -- > instance NFData a => NFData (Bar a) where rnf = genericRnf
 --
 -- __NOTE__: The 'GNFData' type-class showing up in the type-signature is
---       used internally and not exported on purpose currently.
+--           used internally and not exported.
 
 genericRnf :: (Generic a, GNFData (Rep a)) => a -> ()
 genericRnf = grnf_ . from
@@ -97,26 +86,24 @@ class GNFData f where
     grnf_ :: f a -> ()
 
 instance GNFData U1 where
-    grnf_ !U1 = ()
-    {-# INLINE grnf_ #-}
+    grnf_ U1 = ()
 
 instance NFData a => GNFData (K1 i a) where
     grnf_ = rnf . unK1
-    {-# INLINE grnf_ #-}
+    {-# INLINEABLE grnf_ #-}
 
 instance GNFData a => GNFData (M1 i c a) where
     grnf_ = grnf_ . unM1
-    {-# INLINE grnf_ #-}
+    {-# INLINEABLE grnf_ #-}
 
 instance (GNFData a, GNFData b) => GNFData (a :*: b) where
     grnf_ (x :*: y) = grnf_ x `seq` grnf_ y
-    {-# INLINE grnf_ #-}
+    {-# INLINEABLE grnf_ #-}
 
 instance (GNFData a, GNFData b) => GNFData (a :+: b) where
     grnf_ (L1 x) = grnf_ x
     grnf_ (R1 x) = grnf_ x
-    {-# INLINE grnf_ #-}
-
+    {-# INLINEABLE grnf_ #-}
 
 -- | Variant of 'genericRnf' which supports derivation for uninhabited types.
 --
@@ -136,9 +123,15 @@ instance (GNFData a, GNFData b) => GNFData (a :+: b) where
 -- >     In an equation for `it': it = genericRnf (undefined :: TagFoo)
 -- >
 -- > Prelude> genericRnfV1 (undefined :: TagFoo)
--- > *** Exception: Control.DeepSeq.Generics.genericRnfV1: NF not defined for uninhabited types
+-- > *** Exception: Control.DeepSeq.Generics.genericRnfV1: uninhabited type
 --
--- /Since: 0.1.1.0/
+-- 'genericRnfV1' corresponds to @deepseq-1.4.0.0@'s default @rnf@
+-- method implementation.
+--
+-- __NOTE__: The 'GNFDataV1' type-class showing up in the type-signature is
+--           used internally and not exported.
+--
+-- @since 0.1.1.0
 genericRnfV1 :: (Generic a, GNFDataV1 (Rep a)) => a -> ()
 genericRnfV1 = grnfV1_ . from
 {-# INLINE genericRnfV1 #-}
@@ -148,25 +141,24 @@ class GNFDataV1 f where
     grnfV1_ :: f a -> ()
 
 instance GNFDataV1 V1 where
-    grnfV1_ = error "Control.DeepSeq.Generics.genericRnfV1: NF not defined for uninhabited types"
+    grnfV1_ = error "Control.DeepSeq.Generics.genericRnfV1: uninhabited type"
 
 instance GNFDataV1 U1 where
-    grnfV1_ !U1 = ()
-    {-# INLINE grnfV1_ #-}
+    grnfV1_ U1 = ()
 
 instance NFData a => GNFDataV1 (K1 i a) where
     grnfV1_ = rnf . unK1
-    {-# INLINE grnfV1_ #-}
+    {-# INLINEABLE grnfV1_ #-}
 
 instance GNFDataV1 a => GNFDataV1 (M1 i c a) where
     grnfV1_ = grnfV1_ . unM1
-    {-# INLINE grnfV1_ #-}
+    {-# INLINEABLE grnfV1_ #-}
 
 instance (GNFDataV1 a, GNFDataV1 b) => GNFDataV1 (a :*: b) where
     grnfV1_ (x :*: y) = grnfV1_ x `seq` grnfV1_ y
-    {-# INLINE grnfV1_ #-}
+    {-# INLINEABLE grnfV1_ #-}
 
 instance (GNFDataV1 a, GNFDataV1 b) => GNFDataV1 (a :+: b) where
     grnfV1_ (L1 x) = grnfV1_ x
     grnfV1_ (R1 x) = grnfV1_ x
-    {-# INLINE grnfV1_ #-}
+    {-# INLINEABLE grnfV1_ #-}

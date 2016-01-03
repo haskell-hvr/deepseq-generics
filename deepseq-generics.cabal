@@ -1,5 +1,5 @@
 name:                deepseq-generics
-version:             0.1.1.2
+version:             0.2.0.0
 synopsis:            GHC.Generics-based Control.DeepSeq.rnf implementation
 homepage:            https://github.com/hvr/deepseq-generics
 bug-reports:         https://github.com/hvr/deepseq-generics/issues
@@ -28,12 +28,12 @@ description:
     defining a conflicting drop-in replacement for @deepseq@'s
     @Control.Deepseq@ module.
     .
-    Note: The ability to auto-derive via "GHC.Generics" has been
+    __Note__: The ability to auto-derive via "GHC.Generics" has been
     merged into @deepseq-1.4.0.0@. This package is now still useful
     for writing code that's also compatible with older @deepseq@
     versions not yet providing "GHC.Generics"-support.
 
-extra-source-files: changelog
+extra-source-files: changelog.md
 
 source-repository head
     type:     git
@@ -42,7 +42,7 @@ source-repository head
 library
     default-language:    Haskell2010
     exposed-modules:     Control.DeepSeq.Generics
-    build-depends:       base >= 4.5 && < 4.9, ghc-prim >= 0.2 && < 0.4, deepseq >= 1.2.0.1 && < 1.5
+    build-depends:       base >= 4.5 && < 4.10, ghc-prim >= 0.2 && < 0.6, deepseq >= 1.2.0.1 && < 1.5
     other-extensions:    BangPatterns, FlexibleContexts, TypeOperators
     ghc-options:         -Wall
 
