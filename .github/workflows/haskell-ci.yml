@@ -8,9 +8,9 @@
 #
 # For more information, see https://github.com/haskell-CI/haskell-ci
 #
-# version: 0.13.20211116
+# version: 0.14.1
 #
-# REGENDATA ("0.13.20211116",["github","deepseq-generics.cabal"])
+# REGENDATA ("0.14.1",["github","deepseq-generics.cabal"])
 #
 name: Haskell-CI
 on:
@@ -31,6 +31,11 @@ jobs:
           - compiler: ghc-9.2.1
             compilerKind: ghc
             compilerVersion: 9.2.1
+            setup-method: ghcup
+            allow-failure: false
+          - compiler: ghc-9.0.2
+            compilerKind: ghc
+            compilerVersion: 9.0.2
             setup-method: ghcup
             allow-failure: false
           - compiler: ghc-9.0.1
