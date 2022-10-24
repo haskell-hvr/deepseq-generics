@@ -79,54 +79,9 @@ jobs:
             compilerVersion: 8.10.7
             setup-method: ghcup
             allow-failure: false
-          - compiler: ghc-8.10.6
-            compilerKind: ghc
-            compilerVersion: 8.10.6
-            setup-method: ghcup
-            allow-failure: false
-          - compiler: ghc-8.10.5
-            compilerKind: ghc
-            compilerVersion: 8.10.5
-            setup-method: ghcup
-            allow-failure: false
-          - compiler: ghc-8.10.4
-            compilerKind: ghc
-            compilerVersion: 8.10.4
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.10.3
-            compilerKind: ghc
-            compilerVersion: 8.10.3
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.10.2
-            compilerKind: ghc
-            compilerVersion: 8.10.2
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.10.1
-            compilerKind: ghc
-            compilerVersion: 8.10.1
-            setup-method: hvr-ppa
-            allow-failure: false
           - compiler: ghc-8.8.4
             compilerKind: ghc
             compilerVersion: 8.8.4
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.8.3
-            compilerKind: ghc
-            compilerVersion: 8.8.3
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.8.2
-            compilerKind: ghc
-            compilerVersion: 8.8.2
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.8.1
-            compilerKind: ghc
-            compilerVersion: 8.8.1
             setup-method: hvr-ppa
             allow-failure: false
           - compiler: ghc-8.6.5
@@ -134,44 +89,9 @@ jobs:
             compilerVersion: 8.6.5
             setup-method: hvr-ppa
             allow-failure: false
-          - compiler: ghc-8.6.4
-            compilerKind: ghc
-            compilerVersion: 8.6.4
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.6.3
-            compilerKind: ghc
-            compilerVersion: 8.6.3
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.6.2
-            compilerKind: ghc
-            compilerVersion: 8.6.2
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.6.1
-            compilerKind: ghc
-            compilerVersion: 8.6.1
-            setup-method: hvr-ppa
-            allow-failure: false
           - compiler: ghc-8.4.4
             compilerKind: ghc
             compilerVersion: 8.4.4
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.4.3
-            compilerKind: ghc
-            compilerVersion: 8.4.3
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.4.2
-            compilerKind: ghc
-            compilerVersion: 8.4.2
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-8.4.1
-            compilerKind: ghc
-            compilerVersion: 8.4.1
             setup-method: hvr-ppa
             allow-failure: false
           - compiler: ghc-8.2.2
@@ -202,11 +122,6 @@ jobs:
           - compiler: ghc-7.4.2
             compilerKind: ghc
             compilerVersion: 7.4.2
-            setup-method: hvr-ppa
-            allow-failure: false
-          - compiler: ghc-7.4.1
-            compilerKind: ghc
-            compilerVersion: 7.4.1
             setup-method: hvr-ppa
             allow-failure: false
       fail-fast: false
