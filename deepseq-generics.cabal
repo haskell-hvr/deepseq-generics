@@ -1,6 +1,6 @@
+cabal-version:       1.18
 name:                deepseq-generics
-version:             0.2.0.0
-x-revision:          10
+version:             0.2.0.1
 
 synopsis:            GHC.Generics-based Control.DeepSeq.rnf implementation
 homepage:            https://github.com/haskell-hvr/deepseq-generics
@@ -12,9 +12,9 @@ maintainer:          https://github.com/haskell-hvr
 copyright:           2012, Herbert Valerio Riedel
 category:            Control
 build-type:          Simple
-cabal-version:       >=1.10
 
 tested-with:
+  GHC == 9.14.1
   GHC == 9.12.2
   GHC == 9.10.2
   GHC == 9.8.4
@@ -50,7 +50,7 @@ description:
     for writing code that's also compatible with older @deepseq@
     versions not yet providing "GHC.Generics"-support.
 
-extra-source-files: changelog.md
+extra-doc-files: changelog.md
 
 source-repository head
     type:     git
@@ -59,8 +59,7 @@ source-repository head
 library
     default-language:    Haskell2010
     exposed-modules:     Control.DeepSeq.Generics
-    build-depends:       base     >= 4.5     && < 5
-                       , ghc-prim >= 0.2     && < 1
+    build-depends:       base     >= 4.9     && < 5
                        , deepseq  >= 1.2.0.1 && < 1.6
     other-extensions:    BangPatterns, FlexibleContexts, TypeOperators
     ghc-options:         -Wall
@@ -70,14 +69,13 @@ test-suite deepseq-generics-tests
     type:                exitcode-stdio-1.0
     hs-source-dirs:      test
     main-is:             Suite.hs
-    other-extensions:    CPP, DeriveDataTypeable, DeriveGeneric, TupleSections
+    other-extensions:    CPP, DeriveGeneric, TupleSections
     ghc-options:         -Wall
 
     build-depends:
         base
       , deepseq
       , deepseq-generics
-      , ghc-prim
         -- end of packages with inherited version constraints
       , test-framework       >= 0.6.1 && < 0.9
       , test-framework-hunit >= 0.2.2 && < 0.9

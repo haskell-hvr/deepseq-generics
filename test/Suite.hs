@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP, TupleSections, DeriveDataTypeable, DeriveGeneric #-}
+{-# LANGUAGE CPP, TupleSections, DeriveGeneric #-}
 
 module Main (main) where
 
@@ -8,7 +8,6 @@ import Control.Exception
 import Control.Monad
 import Data.Bits
 import Data.IORef
-import Data.Typeable
 import Data.Word
 import GHC.Generics
 import System.IO.Unsafe (unsafePerformIO)
@@ -20,16 +19,6 @@ import Test.HUnit
 
 -- IUT
 import Control.DeepSeq.Generics
-
--- needed for GHC-7.4 compatibility
-#if !MIN_VERSION_base(4,6,0)
-atomicModifyIORef' :: IORef a -> (a -> (a,b)) -> IO b
-atomicModifyIORef' ref f = do
-    b <- atomicModifyIORef ref
-            (\x -> let (a, b) = f x
-                    in (a, a `seq` b))
-    b `seq` return b
-#endif
 
 ----------------------------------------------------------------------------
 -- simple hacky abstraction for testing forced evaluation via `rnf`-like functions
@@ -72,7 +61,7 @@ instance NFData SeqSet where
     {-# NOINLINE rnf #-}
 
 -- |Exception to be thrown for testing 'seq'/'rnf'
-data RnfEx = RnfEx deriving (Eq, Show, Typeable)
+data RnfEx = RnfEx deriving (Eq, Show)
 
 instance Exception RnfEx
 

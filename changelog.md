@@ -1,3 +1,8 @@
+## 0.2.0.1  August 2025
+
+ * Drop support for GHC 7
+ * Tested with GHC 8.0 - 9.14 alpha1
+
 ## 0.2.0.0  January 2016
 
  * Add support for GHC 8.0
